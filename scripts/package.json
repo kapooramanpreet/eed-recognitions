@@ -1,0 +1,19 @@
+{
+  "name": "awards-automation",
+  "version": "1.0.0",
+  "description": "Automation scripts for awards management system",
+  "type": "module",
+  "scripts": {
+    "convert": "node excel-to-json.js",
+    "create-pr": "node create-pr-from-sheets.js",
+    "validate": "node validate-award.js"
+  },
+  "dependencies": {
+    "xlsx": "^0.18.5",
+    "googleapis": "^131.0.0",
+    "@octokit/rest": "^20.0.2",
+    "uuid": "^9.0.1"
+  },
+  "author": "",
+  "license": "MIT"
+}

@@ -1,0 +1,75 @@
+name: Validate Award Data
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'data/awards.json'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: |
+          cd scripts
+          npm ci
+
+      - name: Validate JSON structure
+        id: validate
+        run: |
+          cd scripts
+          node validate-award.js
+
+      - name: Comment PR with validation results
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const resultsFile = 'scripts/validation-results.json';
+
+            let comment = '## Award Data Validation Results\n\n';
+
+            if (fs.existsSync(resultsFile)) {
+              const results = JSON.parse(fs.readFileSync(resultsFile, 'utf8'));
+
+              if (results.valid) {
+                comment += '✅ **All validations passed!**\n\n';
+                comment += `- **Total Awards**: ${results.totalAwards}\n`;
+                comment += `- **New Awards**: ${results.newAwards || 1}\n`;
+                comment += `- **JSON Structure**: Valid\n`;
+                comment += `- **Required Fields**: All present\n`;
+              } else {
+                comment += '❌ **Validation failed**\n\n';
+                comment += '**Errors:**\n';
+                results.errors.forEach(error => {
+                  comment += `- ${error}\n`;
+                });
+              }
+            } else {
+              comment += '✅ Validation completed successfully!\n';
+            }
+
+            comment += '\n---\n*Automated validation by GitHub Actions*';
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
