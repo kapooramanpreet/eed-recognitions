@@ -3,7 +3,7 @@ name: Check Google Form Submissions
 on:
   schedule:
     # Run every 15 minutes
-    - cron: '*/15 * * * *'
+    - cron: '*/59 * * * *'
   workflow_dispatch:  # Allow manual trigger
 
 permissions:
