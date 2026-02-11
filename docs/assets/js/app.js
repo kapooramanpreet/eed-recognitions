@@ -54,15 +54,21 @@ async function init() {
   }
 }
 
-// Populate filter dropdowns with unique values
+// Populate filter dropdowns and checkboxes with unique values
 function populateFilters() {
   // Get unique values
   const levels = [...new Set(allAwards.flatMap(a =>
     a.level.split(',').map(l => l.trim()).filter(l => l)
   ))].sort();
 
-  const awardFors = [...new Set(allAwards.map(a => a.awardFor).filter(a => a))].sort();
-  const types = [...new Set(allAwards.map(a => a.type).filter(t => t))].sort();
+  // Parse comma-separated values for awardFor and types to avoid duplicates
+  const awardFors = [...new Set(allAwards.flatMap(a =>
+    a.awardFor.split(',').map(af => af.trim()).filter(af => af)
+  ))].sort();
+
+  const types = [...new Set(allAwards.flatMap(a =>
+    a.type.split(',').map(t => t.trim()).filter(t => t)
+  ))].sort();
 
   // Populate level dropdown
   const levelSelect = document.getElementById('level-filter');
@@ -73,7 +79,7 @@ function populateFilters() {
     levelSelect.appendChild(option);
   });
 
-  // Populate award for dropdown
+  // Populate award for multiselect dropdown
   const awardForSelect = document.getElementById('awardfor-filter');
   awardFors.forEach(awardFor => {
     const option = document.createElement('option');
@@ -82,7 +88,7 @@ function populateFilters() {
     awardForSelect.appendChild(option);
   });
 
-  // Populate type dropdown
+  // Populate type multiselect dropdown
   const typeSelect = document.getElementById('type-filter');
   types.forEach(type => {
     const option = document.createElement('option');
@@ -96,8 +102,15 @@ function populateFilters() {
 function applyFilters() {
   filters.search = document.getElementById('search-input').value.toLowerCase();
   filters.level = document.getElementById('level-filter').value;
-  filters.awardFor = document.getElementById('awardfor-filter').value;
-  filters.type = document.getElementById('type-filter').value;
+
+  // Get selected options from multiselect for awardFor
+  const awardForSelect = document.getElementById('awardfor-filter');
+  const selectedAwardFors = Array.from(awardForSelect.selectedOptions).map(opt => opt.value);
+
+  // Get selected options from multiselect for type
+  const typeSelect = document.getElementById('type-filter');
+  const selectedTypes = Array.from(typeSelect.selectedOptions).map(opt => opt.value);
+
   filters.deadline = document.getElementById('deadline-filter').value;
 
   filteredAwards = allAwards.filter(award => {
@@ -120,11 +133,23 @@ function applyFilters() {
       if (!awardLevels.includes(filters.level)) return false;
     }
 
-    // Award For filter
-    if (filters.awardFor && award.awardFor !== filters.awardFor) return false;
+    // Award For filter (check if any selected values match any of the award's values)
+    if (selectedAwardFors.length > 0) {
+      const awardForValues = award.awardFor.split(',').map(af => af.trim());
+      const hasMatch = selectedAwardFors.some(selected =>
+        awardForValues.includes(selected)
+      );
+      if (!hasMatch) return false;
+    }
 
-    // Type filter
-    if (filters.type && award.type !== filters.type) return false;
+    // Type filter (check if any selected values match any of the award's values)
+    if (selectedTypes.length > 0) {
+      const typeValues = award.type.split(',').map(t => t.trim());
+      const hasMatch = selectedTypes.some(selected =>
+        typeValues.includes(selected)
+      );
+      if (!hasMatch) return false;
+    }
 
     // Deadline filter
     if (filters.deadline) {
@@ -271,9 +296,9 @@ function createAwardCard(award) {
       ` : ''}
 
       ${award.previousAwardees ? `
-        <div class="mb-4 p-3 rounded border" style="background-color: #FFF5F0; border-color: #FA4616;">
-          <p class="text-xs font-semibold mb-1" style="color: #C63613;">Previous Awardees:</p>
-          <p class="text-xs line-clamp-2" style="color: #E63F14;">${escapeHtml(award.previousAwardees)}</p>
+        <div class="mb-4 p-3 rounded border" style="background-color: #F0FFF4; border-color: #48BB78;">
+          <p class="text-xs font-semibold mb-1" style="color: #2F855A;">Previous Awardees:</p>
+          <p class="text-xs line-clamp-2" style="color: #38A169;">${escapeHtml(award.previousAwardees)}</p>
         </div>
       ` : ''}
 
@@ -311,11 +336,26 @@ function attachFilterListeners() {
   document.getElementById('type-filter').addEventListener('change', applyFilters);
   document.getElementById('deadline-filter').addEventListener('change', applyFilters);
 
+  // Accordion toggle for filters
+  const accordionToggle = document.getElementById('filter-accordion-toggle');
+  const filterContent = document.getElementById('filter-content');
+  const chevron = document.getElementById('filter-chevron');
+
+  accordionToggle.addEventListener('click', () => {
+    if (filterContent.classList.contains('hidden')) {
+      filterContent.classList.remove('hidden');
+      chevron.style.transform = 'rotate(180deg)';
+    } else {
+      filterContent.classList.add('hidden');
+      chevron.style.transform = 'rotate(0deg)';
+    }
+  });
+
   document.getElementById('reset-filters').addEventListener('click', () => {
     document.getElementById('search-input').value = '';
     document.getElementById('level-filter').value = '';
-    document.getElementById('awardfor-filter').value = '';
-    document.getElementById('type-filter').value = '';
+    document.getElementById('awardfor-filter').selectedIndex = -1;
+    document.getElementById('type-filter').selectedIndex = -1;
     document.getElementById('deadline-filter').value = '';
     applyFilters();
   });
@@ -372,6 +412,11 @@ function generateCalendar(award) {
     const deadline = new Date(award.deadlineDate);
     const startDate = deadline.toISOString().split('T')[0].replace(/-/g, '');
 
+    // For all-day events, end date should be the next day in iCalendar format
+    const endDeadline = new Date(deadline);
+    endDeadline.setDate(endDeadline.getDate() + 1);
+    const endDate = endDeadline.toISOString().split('T')[0].replace(/-/g, '');
+
     // Create description with details
     let description = '';
     if (award.requirements) {
@@ -390,7 +435,7 @@ function generateCalendar(award) {
       description,
       '',
       startDate,
-      startDate
+      endDate
     );
 
     const filename = award.title.replace(/[^a-z0-9]/gi, '-').toLowerCase();

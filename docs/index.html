@@ -23,6 +23,35 @@
     .border-uf-orange { border-color: var(--uf-orange); }
     .hover\:bg-uf-orange:hover { background-color: #E63F14; }
     .focus\:ring-uf-blue:focus { --tw-ring-color: var(--uf-blue); }
+
+    /* Modern header gradient */
+    .header-gradient {
+      background: linear-gradient(135deg, #0021A5 0%, #001580 50%, #0021A5 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header-gradient::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 200%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      animation: shimmer 3s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    .header-icon {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
   </style>
 
   <!-- Custom styles -->
@@ -30,24 +59,52 @@
 </head>
 <body class="bg-gray-50 min-h-screen">
   <!-- Header -->
-  <header class="bg-uf-blue text-white shadow-lg">
-    <div class="container mx-auto px-4 py-8">
-      <h1 class="text-4xl font-bold mb-2">EEd Recognition Portal</h1>
-      <p class="text-gray-100 text-lg">Discover opportunities for academic recognition and excellence</p>
+  <header class="header-gradient text-white shadow-2xl">
+    <div class="container mx-auto px-4 py-10">
+      <div class="flex items-center justify-between">
+        <!-- Left side: Title and subtitle -->
+        <div class="flex-1">
+          <div class="flex items-center gap-4 mb-3">
+            <!-- Award icon -->
+            <div class="header-icon rounded-xl p-3 flex items-center justify-center">
+              <span class="text-3xl" role="img" aria-label="Trophy">🏆</span>
+            </div>
+            <div>
+              <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">
+                EEd Recognition Portal
+              </h1>
+              <div class="h-1 w-24 bg-uf-orange rounded-full mt-2"></div>
+            </div>
+          </div>
+          <p class="text-blue-100 text-lg md:text-xl font-light ml-20 flex items-center gap-2">
+            <svg class="w-5 h-5 text-uf-orange" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+            </svg>
+            Find awards, get recognition you deserve, and rise! 🐊
+          </p>
+        </div>
+      </div>
     </div>
+    <!-- Orange accent line at bottom -->
+    <div class="h-1 bg-gradient-to-r from-uf-orange via-yellow-400 to-uf-orange"></div>
   </header>
 
   <!-- Filters Section -->
   <section class="container mx-auto px-4 py-8">
     <div class="bg-white rounded-lg shadow-md p-6">
-      <h2 class="text-2xl font-semibold mb-6 text-gray-800">
-        <svg class="inline w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+      <button id="filter-accordion-toggle" class="w-full flex items-center justify-between text-left mb-6 hover:opacity-80 transition-opacity">
+        <h2 class="text-2xl font-semibold text-gray-800 flex items-center">
+          <svg class="inline w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+          </svg>
+          Filter Awards
+        </h2>
+        <svg id="filter-chevron" class="w-6 h-6 text-gray-600 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
         </svg>
-        Filter Awards
-      </h2>
+      </button>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+      <div id="filter-content" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
         <!-- Search -->
         <div class="col-span-1 md:col-span-2 lg:col-span-4">
           <label for="search-input" class="block text-sm font-medium text-gray-700 mb-2">
@@ -82,11 +139,13 @@
           </label>
           <select
             id="awardfor-filter"
-            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-uf-blue focus:border-transparent"
+            multiple
+            class="w-full px-2 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-uf-blue focus:border-transparent bg-white text-sm"
+            style="min-height: 80px;"
           >
-            <option value="">All Categories</option>
             <!-- Populated dynamically -->
           </select>
+          <p class="text-xs text-gray-500 mt-1">Hold Ctrl/Cmd to select multiple</p>
         </div>
 
         <!-- Type Filter -->
@@ -96,11 +155,13 @@
           </label>
           <select
             id="type-filter"
-            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-uf-blue focus:border-transparent"
+            multiple
+            class="w-full px-2 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-uf-blue focus:border-transparent bg-white text-sm"
+            style="min-height: 80px;"
           >
-            <option value="">All Types</option>
             <!-- Populated dynamically -->
           </select>
+          <p class="text-xs text-gray-500 mt-1">Hold Ctrl/Cmd to select multiple</p>
         </div>
 
         <!-- Deadline Filter -->
@@ -122,13 +183,13 @@
       </div>
 
       <div class="flex justify-between items-center">
+        <div id="results-count" class="text-gray-600 font-medium"></div>
         <button
           id="reset-filters"
           class="px-6 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors font-medium"
         >
           Reset Filters
         </button>
-        <div id="results-count" class="text-gray-600 font-medium"></div>
       </div>
     </div>
   </section>
