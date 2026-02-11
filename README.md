@@ -2,7 +2,7 @@
 
 A fully automated GitHub Pages website for managing and displaying academic awards and recognitions for the Department of Engineering Education. Features include powerful filtering, calendar reminders, and automated submission workflow via Google Forms.
 
-🌐 **Live Website:** `https://kapooramanpreet.github.io/eed-recognitions`
+🌐 **Live Website:** https://kapooramanpreet.github.io/eed-recognitions
 
 ## Features
 
