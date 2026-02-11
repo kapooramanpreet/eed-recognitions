@@ -1,8 +1,8 @@
-# Awards & Recognition Portal
+# EEd Recognition Portal
 
-A fully automated GitHub Pages website for managing and displaying academic awards and recognitions. Features include powerful filtering, calendar reminders, and automated submission workflow via Google Forms.
+A fully automated GitHub Pages website for managing and displaying academic awards and recognitions for the Department of Engineering Education. Features include powerful filtering, calendar reminders, and automated submission workflow via Google Forms.
 
-🌐 **Live Website:** `https://<your-username>.github.io/claude-test/`
+🌐 **Live Website:** `https://kapooramanpreet.github.io/eed-recognitions`
 
 ## Features
 
@@ -34,13 +34,13 @@ cd scripts
 npm install
 ```
 
-#### B. Convert Excel Data
+#### B. Convert Award Data (Optional)
 
 ```bash
 npm run convert
 ```
 
-This converts `recognition/awards.xlsx` to `data/awards.json`. Review the generated JSON file before proceeding.
+This converts `data/eed-awards.csv` to `data/awards.json`. The system comes with pre-populated award data. Only run this if you have a new CSV export to convert. Review the generated JSON file before proceeding.
 
 ### 2. GitHub Setup
 
@@ -101,17 +101,17 @@ Your website will be live at `https://<your-username>.github.io/claude-test/` in
 
    | Field Name | Type | Settings |
    |------------|------|----------|
-   | Title of Award | Short answer | Required |
-   | Final Due Date - Month | Dropdown | Required, Options: January-December |
-   | Final Due Date - Day | Short answer | Required, Number validation 1-31 |
-   | Level | Dropdown | Required, Options: department, college, university |
-   | Mode of Application | Multiple choice | Required |
-   | Award for | Dropdown | Required, Options: Faculty, Staff, Students, etc. |
-   | Type of Award | Dropdown | Required |
-   | Internal Due Date | Date | Optional |
-   | Requirements | Long answer | Required |
-   | Previous Awardees | Long answer | Optional |
-   | Link to Award | Short answer | Required, URL validation |
+   | Official Title of the Award | Short answer | Required |
+   | Award Level | Checkboxes | Required, Options: University (internal to UF), College (internal to UF), Department (internal to UF), National/External |
+   | Eligible Applicant Group(s) | Checkboxes | Required, Options: Faculty, Staff, Graduate Students, Undergraduate Students, Courses/Programs |
+   | Application Mode | Multiple choice | Required, Options: Internal Review Required (Committee/Departmental Review), Apply Independently (No Internal Review Required) |
+   | Type of Award | Checkboxes | Optional, Options: Cash/Monetary Prize, Research Grant/Funding, Plaque/Certificate, Scholarship, Trophy, Other |
+   | Key Requirements and Eligibility Criteria | Long answer | Required |
+   | Link to the Official Award Application/Information Page | Short answer | Required, URL validation |
+   | Final Submission Due Date | Date | Required |
+   | Internal Due Date for Review/Approval (If applicable) | Date | Optional |
+   | List of Previous Awardees from the Department (If known) | Long answer | Optional |
+   | Any other comments | Long answer | Optional, Add note: "This won't be posted publicly" |
 
 #### B. Link to Google Sheets
 
@@ -266,22 +266,22 @@ claude-test/
 │   │   └── validate-pr.yml             # Validates award data
 │   └── PULL_REQUEST_TEMPLATE.md        # PR template
 ├── data/
-│   └── awards.json                     # Main awards database
+│   ├── awards.json                     # Main awards database
+│   └── eed-awards.csv                  # Source CSV export
 ├── docs/                               # GitHub Pages site
 │   ├── index.html                      # Main page
 │   ├── assets/
-│   │   ├── css/styles.css              # Custom styles
+│   │   ├── css/styles.css              # Custom styles (UF branding)
 │   │   └── js/
 │   │       ├── app.js                  # Main application
 │   │       └── libs/ics.min.js         # Calendar generation
 │   └── data/awards.json                # Copy of awards data
 ├── scripts/
-│   ├── excel-to-json.js                # Initial data conversion
+│   ├── csv-to-json.js                  # CSV to JSON conversion
+│   ├── excel-to-json.js                # Legacy Excel conversion
 │   ├── create-pr-from-sheets.js        # PR automation
 │   ├── validate-award.js               # Data validation
 │   └── package.json                    # Dependencies
-├── recognition/
-│   └── awards.xlsx                     # Original Excel file
 ├── .gitignore
 └── README.md
 ```
@@ -363,8 +363,11 @@ Visit `http://localhost:8000` in your browser.
 ```bash
 cd scripts
 
-# Convert Excel to JSON
+# Convert CSV to JSON (from data/eed-awards.csv)
 npm run convert
+
+# Convert Excel to JSON (legacy, if you have .xlsx files)
+npm run convert-excel
 
 # Validate awards data
 npm run validate
@@ -443,4 +446,4 @@ Built with:
 
 ---
 
-Made with ❤️ for academic recognition and excellence
+Made with ❤️ by EEd Recognition Committee

@@ -94,43 +94,68 @@ async function processSubmission(row, rowNumber, sheets) {
   console.log(`Processing submission from row ${rowNumber}...`);
 
   // Map form data to award structure
-  // Assuming form columns match: Timestamp, Title, Month, Day, Level, Mode, AwardFor, Type, Internal, Reqs, Previous, Link
-  const monthData = row[2];
-  let month, monthName;
+  // Columns: Timestamp, Username, Title, Level, Applicants, Mode, Type, Requirements, Link, Deadline, Internal, Previous, Comments
+  const title = (row[2] || '').toString().trim();
+  const awardLevel = (row[3] || '').toString().trim();
+  const eligibleApplicants = (row[4] || '').toString().trim();
+  const applicationMode = (row[5] || '').toString().trim();
+  const typeOfAward = (row[6] || '').toString().trim();
+  const requirements = (row[7] || '').toString().trim();
+  const link = (row[8] || '').toString().trim();
+  const finalDeadline = (row[9] || '').toString().trim();
+  const internalDeadline = (row[10] || '').toString().trim();
+  const previousAwardees = (row[11] || '').toString().trim();
 
-  if (typeof monthData === 'string') {
-    monthName = monthData.trim();
-    month = monthMap[monthName] || 1;
-  } else if (typeof monthData === 'number') {
-    month = Math.floor(monthData);
-    monthName = monthNames[month] || 'January';
-  } else {
-    monthName = 'January';
-    month = 1;
+  // Parse deadline from M/D/YYYY format
+  const deadlineInfo = parseDateString(finalDeadline);
+  if (!deadlineInfo) {
+    throw new Error('Invalid deadline format');
   }
 
-  const currentYear = new Date().getFullYear();
-  const day = parseInt(row[3]) || 1;
-  let deadlineDate = new Date(currentYear, month - 1, day);
+  // Clean up level (remove parenthetical explanations and split by semicolon)
+  const levelCleaned = awardLevel
+    .split(';')
+    .map(l => l.replace(/\s*\(.*?\)\s*/g, '').trim())
+    .filter(l => l)
+    .join(', ');
 
-  if (deadlineDate < new Date()) {
-    deadlineDate = new Date(currentYear + 1, month - 1, day);
+  // Parse applicant groups (split by semicolon)
+  const awardFor = eligibleApplicants
+    .split(';')
+    .map(a => a.trim())
+    .filter(a => a)
+    .join(', ');
+
+  // Parse type of award (split by semicolon)
+  const type = typeOfAward
+    .split(';')
+    .map(t => t.trim())
+    .filter(t => t)
+    .join(', ');
+
+  // Parse internal deadline if exists
+  let internalDeadlineFormatted = '';
+  if (internalDeadline) {
+    const internalDate = parseDateString(internalDeadline);
+    if (internalDate) {
+      internalDeadlineFormatted = internalDate.date;
+    }
   }
 
   const award = {
     id: uuidv4(),
-    title: (row[1] || '').toString().trim(),
-    deadlineMonth: monthName,
-    deadlineDay: day,
-    deadlineDate: deadlineDate.toISOString().split('T')[0],
-    level: (row[4] || '').toString().trim(),
-    applicationMode: (row[5] || '').toString().trim(),
-    awardFor: (row[6] || '').toString().trim(),
-    type: (row[7] || '').toString().trim(),
-    internalDeadline: (row[8] || '').toString().trim(),
-    requirements: (row[9] || '').toString().trim(),
-    previousAwardees: (row[10] || '').toString().trim(),
-    link: (row[11] || '').toString().trim(),
+    title: title,
+    deadlineMonth: deadlineInfo.month,
+    deadlineDay: deadlineInfo.day,
+    deadlineDate: deadlineInfo.date,
+    level: levelCleaned,
+    applicationMode: applicationMode,
+    awardFor: awardFor,
+    type: type,
+    internalDeadline: internalDeadlineFormatted,
+    requirements: requirements,
+    previousAwardees: previousAwardees,
+    link: link,
     dateAdded: new Date().toISOString(),
     status: 'active',
     isRecurring: true
@@ -306,6 +331,35 @@ async function setLastProcessedRow(row) {
   }
 
   fs.writeFileSync(statePath, JSON.stringify({ lastProcessedRow: row }, null, 2));
+}
+
+// Parse date string from M/D/YYYY format
+function parseDateString(dateStr) {
+  if (!dateStr || !dateStr.trim()) return null;
+
+  const parts = dateStr.trim().split('/');
+  if (parts.length !== 3) return null;
+
+  const month = parseInt(parts[0]);
+  const day = parseInt(parts[1]);
+  const year = parseInt(parts[2]);
+
+  if (isNaN(month) || isNaN(day) || isNaN(year)) return null;
+
+  const monthNames = ['', 'January', 'February', 'March', 'April', 'May', 'June',
+                     'July', 'August', 'September', 'October', 'November', 'December'];
+
+  const monthName = monthNames[month] || 'January';
+
+  // Create date in YYYY-MM-DD format
+  const dateObj = new Date(year, month - 1, day);
+  const isoDate = dateObj.toISOString().split('T')[0];
+
+  return {
+    month: monthName,
+    day: day,
+    date: isoDate
+  };
 }
 
 // Run

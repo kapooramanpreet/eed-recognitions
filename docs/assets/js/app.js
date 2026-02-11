@@ -167,6 +167,9 @@ function renderAwards() {
 
   // Attach calendar download listeners
   attachCalendarListeners();
+
+  // Attach requirements expand listeners
+  attachRequirementsListeners();
 }
 
 // Create HTML for single award card
@@ -231,7 +234,7 @@ function createAwardCard(award) {
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
           </svg>
           <div>
-            <span class="font-medium text-gray-700">Type:</span>
+            <span class="font-medium text-gray-700">Recognition:</span>
             <span class="text-gray-600">${escapeHtml(award.type)}</span>
           </div>
         </div>
@@ -261,9 +264,9 @@ function createAwardCard(award) {
       </div>
 
       ${award.requirements ? `
-        <div class="mb-4 p-3 bg-gray-50 rounded border border-gray-200">
-          <p class="text-xs font-semibold text-gray-700 mb-1">Requirements:</p>
-          <p class="text-xs text-gray-600 line-clamp-3">${escapeHtml(award.requirements)}</p>
+        <div class="mb-4 p-3 bg-gray-50 rounded border border-gray-200 cursor-pointer hover:bg-gray-100 transition-colors requirements-section" data-award-id="${escapeHtml(award.id)}">
+          <p class="text-xs font-semibold text-gray-700 mb-1">Requirements: <span class="text-gray-500 font-normal">(click to expand)</span></p>
+          <p class="text-xs text-gray-600 line-clamp-3 requirements-text">${escapeHtml(award.requirements)}</p>
         </div>
       ` : ''}
 
@@ -284,7 +287,7 @@ function createAwardCard(award) {
           onmouseover="this.style.backgroundColor='#001580'"
           onmouseout="this.style.backgroundColor='#0021A5'"
         >
-          View Details
+          Award Page
         </a>
         <button
           data-award-id="${escapeHtml(award.id)}"
@@ -338,6 +341,24 @@ function attachCalendarListeners() {
           button.innerHTML = originalHtml;
           button.classList.remove('bg-green-100', 'text-green-700');
         }, 2000);
+      }
+    });
+  });
+}
+
+// Attach requirements expand listeners
+function attachRequirementsListeners() {
+  document.querySelectorAll('.requirements-section').forEach(section => {
+    section.addEventListener('click', () => {
+      const requirementsText = section.querySelector('.requirements-text');
+      const expandHint = section.querySelector('span');
+
+      if (requirementsText.classList.contains('line-clamp-3')) {
+        requirementsText.classList.remove('line-clamp-3');
+        expandHint.textContent = '(click to collapse)';
+      } else {
+        requirementsText.classList.add('line-clamp-3');
+        expandHint.textContent = '(click to expand)';
       }
     });
   });
