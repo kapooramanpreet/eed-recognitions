@@ -4,20 +4,36 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Browse and apply for academic awards and recognitions">
-  <title>Awards & Recognition Portal</title>
+  <title>EEd Recognition Portal</title>
 
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- UF Brand Colors -->
+  <style>
+    :root {
+      --uf-blue: #0021A5;
+      --uf-orange: #FA4616;
+    }
+    .bg-uf-blue { background-color: var(--uf-blue); }
+    .bg-uf-orange { background-color: var(--uf-orange); }
+    .text-uf-blue { color: var(--uf-blue); }
+    .text-uf-orange { color: var(--uf-orange); }
+    .border-uf-blue { border-color: var(--uf-blue); }
+    .border-uf-orange { border-color: var(--uf-orange); }
+    .hover\:bg-uf-orange:hover { background-color: #E63F14; }
+    .focus\:ring-uf-blue:focus { --tw-ring-color: var(--uf-blue); }
+  </style>
 
   <!-- Custom styles -->
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body class="bg-gray-50 min-h-screen">
   <!-- Header -->
-  <header class="bg-gradient-to-r from-blue-600 to-blue-800 text-white shadow-lg">
+  <header class="bg-uf-blue text-white shadow-lg">
     <div class="container mx-auto px-4 py-8">
-      <h1 class="text-4xl font-bold mb-2">Awards & Recognition Portal</h1>
-      <p class="text-blue-100 text-lg">Discover opportunities for academic recognition and excellence</p>
+      <h1 class="text-4xl font-bold mb-2">EEd Recognition Portal</h1>
+      <p class="text-gray-100 text-lg">Discover opportunities for academic recognition and excellence</p>
     </div>
   </header>
 
@@ -41,7 +57,7 @@
             type="text"
             id="search-input"
             placeholder="Search by title, requirements, or awardees..."
-            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-uf-blue focus:border-transparent"
           >
         </div>
 
@@ -52,7 +68,7 @@
           </label>
           <select
             id="level-filter"
-            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-uf-blue focus:border-transparent"
           >
             <option value="">All Levels</option>
             <!-- Populated dynamically -->
@@ -66,7 +82,7 @@
           </label>
           <select
             id="awardfor-filter"
-            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-uf-blue focus:border-transparent"
           >
             <option value="">All Categories</option>
             <!-- Populated dynamically -->
@@ -80,7 +96,7 @@
           </label>
           <select
             id="type-filter"
-            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-uf-blue focus:border-transparent"
           >
             <option value="">All Types</option>
             <!-- Populated dynamically -->
@@ -94,7 +110,7 @@
           </label>
           <select
             id="deadline-filter"
-            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-uf-blue focus:border-transparent"
           >
             <option value="">All Deadlines</option>
             <option value="30">Next 30 days</option>
@@ -120,7 +136,7 @@
   <!-- Awards Grid Section -->
   <section class="container mx-auto px-4 py-4 pb-12">
     <div id="loading" class="text-center py-12">
-      <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-uf-blue"></div>
       <p class="mt-4 text-gray-600">Loading awards...</p>
     </div>
 
@@ -145,7 +161,7 @@
         <a
           href="#"
           id="submit-form-link"
-          class="inline-block px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors font-medium"
+          class="inline-block px-6 py-3 bg-uf-orange text-white rounded-md hover:bg-uf-orange transition-colors font-medium"
         >
           Submit an Award via Google Form
         </a>
