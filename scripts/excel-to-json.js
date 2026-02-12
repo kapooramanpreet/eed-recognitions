@@ -128,7 +128,7 @@ const awardsData = {
 };
 
 // Ensure data directory exists
-const dataDir = path.join(__dirname, '..', 'data');
+const dataDir = path.join(__dirname, '..', 'docs', 'data');
 if (!fs.existsSync(dataDir)) {
   fs.mkdirSync(dataDir, { recursive: true });
   console.log('\n✓ Created data directory');
@@ -151,5 +151,5 @@ console.log(`   - Unique levels: ${[...new Set(awards.map(a => a.level))].length
 console.log(`   - Unique types: ${[...new Set(awards.map(a => a.type))].length}`);
 console.log(`\nNext steps:`);
 console.log(`   1. Review the generated awards.json file`);
-console.log(`   2. Copy it to docs/data/ folder when building the website`);
+console.log(`   2. The file is already in docs/data/ and ready to serve`);
 console.log(`   3. The original Excel file can be archived`);

@@ -105,7 +105,7 @@ try {
   };
 
   // Write to awards.json
-  const outputPath = path.join(__dirname, '..', 'data', 'awards.json');
+  const outputPath = path.join(__dirname, '..', 'docs', 'data', 'awards.json');
   fs.writeFileSync(outputPath, JSON.stringify(jsonData, null, 2));
 
   console.log(`\n✅ Successfully converted ${awards.length} awards to JSON`);

@@ -169,7 +169,7 @@ async function processSubmission(row, rowNumber, sheets) {
   console.log(`  Award: "${award.title}"`);
 
   // Read current awards.json
-  const dataPath = path.join(__dirname, '..', 'data', 'awards.json');
+  const dataPath = path.join(__dirname, '..', 'docs', 'data', 'awards.json');
   const currentData = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
 
   // Check for duplicates
@@ -213,7 +213,7 @@ async function processSubmission(row, rowNumber, sheets) {
   const fileContent = await octokit.rest.repos.getContent({
     owner,
     repo,
-    path: 'data/awards.json',
+    path: 'docs/data/awards.json',
     ref: 'main',
   });
 
@@ -221,7 +221,7 @@ async function processSubmission(row, rowNumber, sheets) {
   await octokit.rest.repos.createOrUpdateFileContents({
     owner,
     repo,
-    path: 'data/awards.json',
+    path: 'docs/data/awards.json',
     message: `Add award: ${award.title}`,
     content: Buffer.from(JSON.stringify(currentData, null, 2)).toString('base64'),
     sha: fileContent.data.sha,

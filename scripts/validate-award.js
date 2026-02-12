@@ -14,7 +14,7 @@ console.log('🔍 Validating awards.json...\n');
 
 try {
   // Read awards.json
-  const dataPath = path.join(__dirname, '..', 'data', 'awards.json');
+  const dataPath = path.join(__dirname, '..', 'docs', 'data', 'awards.json');
 
   if (!fs.existsSync(dataPath)) {
     console.error('❌ Error: awards.json not found at', dataPath);

@@ -53,8 +53,44 @@
       "dateAdded": "2026-02-11T21:02:45.386Z",
       "status": "active",
       "isRecurring": true
+    },
+    {
+      "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "title": "Undergraduate Teacher of the Year",
+      "deadlineMonth": "November",
+      "deadlineDay": 15,
+      "deadlineDate": "2026-11-15",
+      "level": "University, College, Department",
+      "applicationMode": "Internal Review Required (Committee/Departmental Review)",
+      "awardFor": "Faculty",
+      "type": "Cash/Monetary Prize, Plaque/Certificate",
+      "internalDeadline": "2026-11-15",
+      "requirements": "The University of Florida recognizes its outstanding teachers and advisers from throughout the campus by presenting teaching and advising awards, which are available to all colleges offering undergraduate instruction. These awards are to encourage and reward excellence, innovation, and effectiveness in either teaching or advising.\n\nNominations for all awards will be solicited from students, faculty members, department chairs, higher-level administrators, and others. Individual faculty members may nominate themselves, but must win at the College level before being forwarded for consideration at the University-wide level.\n\nThe individual must be a full-time faculty member, tenured or untenured, who has been responsible for teaching at least two undergraduate classes during the current calendar year. Excellence and effectiveness will be demonstrated by standard evaluations of students, instructors, courses, and observation by peers and department chairs.\n\nIndividuals who received teaching or advising awards at the college level or University-wide level during the previous 2 years are not eligible.",
+      "previousAwardees": "Ashish Aggarwal, Amanpreet Kapoor",
+      "link": "https://aa.ufl.edu/awards/uf-internal-awards/teacher--adviser-of-the-year/",
+      "dateAdded": "2026-02-12T11:20:22.000Z",
+      "status": "active",
+      "isRecurring": true
+    },
+    {
+      "id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+      "title": "IEEE/ASEE New Faculty Fellows Award",
+      "deadlineMonth": "August",
+      "deadlineDay": 1,
+      "deadlineDate": "2026-08-01",
+      "level": "International, National",
+      "applicationMode": "Apply Independently (No Internal Review Required)",
+      "awardFor": "Faculty",
+      "type": "Plaque/Certificate, Travel/Professional Development Stipend",
+      "internalDeadline": "",
+      "requirements": "The goal of the IEEE ASEE Frontiers in Education (FIE) New Faculty Fellows (NFF) award is to recognize early career engineering and computing education scholars for the potential of their contribution to the field. The New Faculty Fellows award recognizes up to five individuals for the award ($1000 each) to assist the recipients in traveling and attending the conference.\n\nRequirements:\n- Have submitted and got acceptance of a Work-In-Progress or Full Paper (must be first author on paper)\n- Must not have attended or co-authored in any previous FIE conference (prior to 2025) as a postdoctoral researcher or early-career/junior faculty member (tenure track or non-tenure track).\n- Nomination letter, CV, Letter of Agreement",
+      "previousAwardees": "Edwin Marte, Andrea Ramirez-Salgado",
+      "link": "https://2025.fie-conference.org/awards/2025-new-faculty-fellows-award",
+      "dateAdded": "2026-02-12T11:25:01.000Z",
+      "status": "active",
+      "isRecurring": true
     }
   ],
-  "lastUpdated": "2026-02-11T21:02:45.386Z",
+  "lastUpdated": "2026-02-12T11:25:01.000Z",
   "version": "2.0"
 }

@@ -22,6 +22,8 @@ desktop.ini
 # Temporary files
 *.tmp
 temp/
+local/
+data/
 
 # Keep recognition folder but ignore the Excel file after conversion
 # recognition/awards.xlsx
