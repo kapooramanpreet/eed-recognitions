@@ -57,9 +57,17 @@ async function init() {
 // Populate filter dropdowns and checkboxes with unique values
 function populateFilters() {
   // Get unique values
+  const levelOrder = ['International', 'National', 'Local', 'University', 'College', 'Department'];
   const levels = [...new Set(allAwards.flatMap(a =>
     a.level.split(',').map(l => l.trim()).filter(l => l)
-  ))].sort();
+  ))].sort((a, b) => {
+    const ai = levelOrder.indexOf(a);
+    const bi = levelOrder.indexOf(b);
+    if (ai !== -1 && bi !== -1) return ai - bi;
+    if (ai !== -1) return -1;
+    if (bi !== -1) return 1;
+    return a.localeCompare(b);
+  });
 
   // Parse comma-separated values for awardFor and types to avoid duplicates
   const awardFors = [...new Set(allAwards.flatMap(a =>
