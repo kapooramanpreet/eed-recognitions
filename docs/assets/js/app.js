@@ -306,7 +306,11 @@ function createAwardCard(award) {
       ${award.previousAwardees ? `
         <div class="mb-4 p-3 rounded border" style="background-color: #F0FFF4; border-color: #48BB78;">
           <p class="text-xs font-semibold mb-1" style="color: #2F855A;">Previous Awardees:</p>
-          <p class="text-xs line-clamp-2" style="color: #38A169;">${escapeHtml(award.previousAwardees)}</p>
+          <div class="flex flex-wrap gap-1 mt-1">
+            ${award.previousAwardees.split(',').map(name => name.trim()).filter(name => name).map(name => `
+              <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium" style="background-color: #F0FFF4; color: #22543D; border: 1px solid #C6F6D5;">${escapeHtml(name)}</span>
+            `).join('')}
+          </div>
         </div>
       ` : ''}
 
