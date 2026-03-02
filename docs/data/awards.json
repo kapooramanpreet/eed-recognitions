@@ -89,6 +89,24 @@
       "dateAdded": "2026-02-12T11:25:01.000Z",
       "status": "active",
       "isRecurring": true
+    },
+    {
+      "id": "b8a91cf8-949d-4df5-a76a-bc3a24e3f84e",
+      "title": "UF HWCOE Faculty Award for Excellence in Innovation",
+      "level": "College (internal to UF)",
+      "link": "https://www.eng.ufl.edu/news/featured/2024-2025-awards-for-the-herbert-wertheim-college-of-engineering/",
+      "deadlineMonth": "February",
+      "deadlineDay": 18,
+      "deadlineDate": "2026-02-18",
+      "applicationMode": "Internal Review Required (Committee/Departmental Review)",
+      "awardFor": "Faculty",
+      "type": "Cash/Monetary Prize, Plaque/Certificate",
+      "internalDeadline": "3/5/2026",
+      "requirements": "The Faculty Innovation Excellence Award recognizes and rewards a faculty member who has best demonstrated extraordinary innovation and creativity through their research or teaching portfolio and best exemplifies innovation and creativity as defined by introducing new, high-value research or education processes or outcomes that can have significant impact on future generations. These can include creative and ground-breaking teaching methodologies or educational pedagogies or research advances being translated to market applications that can have a significant impact on future generations and attack the world?s most daunting engineering challenges. \n\nNominations for the award come from the appropriate student groups (i.e., undergraduate or graduate students depending on the instructional or research focus of the faculty nominee), other faculty members, departmental administrators, or college-level administrators.\n\nThe award is conferred annually and provides $1,000 to the award recipient.\n\nEligibility Criteria:\nAll faculty are eligible regardless of rank or tenure status.\nCandidates will not have been the award recipient in the prior 5 years.\n\nNomination Packet:\nOne primary letter of nomination describing the nominee?s contributions to innovation and creativity (2 page max). \nSelf-nominations are not allowed.\nOne endorsement letter by Department Chair or College Administrator (1 page max).\nLimit of two nominations per department or college administrative unit.",
+      "previousAwardees": "",
+      "dateAdded": "2026-03-02T20:30:19.526Z",
+      "status": "active",
+      "isRecurring": true
     }
   ],
   "lastUpdated": "2026-02-12T11:25:01.000Z",
