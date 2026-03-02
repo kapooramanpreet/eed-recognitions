@@ -29,7 +29,7 @@
       "awardFor": "Faculty",
       "type": "Research Grant/Funding, Cash/Monetary Prize, Plaque/Certificate",
       "internalDeadline": "2026-10-01",
-      "requirements": "The University of Florida Graduate School’s yearly Faculty Doctoral Mentoring Award (FDMA) spotlights outstanding, innovative, and effective mentoring of doctoral and Master of Fine Arts student through their final dissertation or fine arts thesis project.\n\nThis award gives $3,000 to each of five or so faculty members, plus $1,000 to each winner's academic unit to use to support doctoral or Master of Fine Arts students.\n\nNominations for this award come from current UF graduate students, faculty members, administrators, and alumni.",
+      "requirements": "The University of Florida Graduate School?s yearly Faculty Doctoral Mentoring Award (FDMA) spotlights outstanding, innovative, and effective mentoring of doctoral and Master of Fine Arts student through their final dissertation or fine arts thesis project.\n\nThis award gives $3,000 to each of five or so faculty members, plus $1,000 to each winner's academic unit to use to support doctoral or Master of Fine Arts students.\n\nNominations for this award come from current UF graduate students, faculty members, administrators, and alumni.",
       "previousAwardees": "",
       "link": "https://grad.ufl.edu/work/awards/fdma/",
       "dateAdded": "2026-02-11T21:02:45.386Z",
@@ -47,7 +47,7 @@
       "awardFor": "Faculty, Staff, Courses",
       "type": "Plaque/Certificate",
       "internalDeadline": "2026-03-15",
-      "requirements": "The University of Florida Career Influencer Awards celebrate the collaboration and innovation of our partners who have had an exceptional impact on career development and career engagements during the preceding academic year. All awards are presented at the Career Connections Center’s annual Faculty and Staff Career Symposium.\n\nThe categories for the Career Influencer Awards are UF Faculty, UF Staff, the Exemplary Experiential Learning Program Within the Classroom Award, and the Outstanding Experiential Learning Program Extending Beyond the Classroom Award.",
+      "requirements": "The University of Florida Career Influencer Awards celebrate the collaboration and innovation of our partners who have had an exceptional impact on career development and career engagements during the preceding academic year. All awards are presented at the Career Connections Center?s annual Faculty and Staff Career Symposium.\n\nThe categories for the Career Influencer Awards are UF Faculty, UF Staff, the Exemplary Experiential Learning Program Within the Classroom Award, and the Outstanding Experiential Learning Program Extending Beyond the Classroom Award.",
       "previousAwardees": "IPPD, G. Chip Johnson, Amanpreet Kapoor",
       "link": "https://career.ufl.edu/faculty/faculty-staff-career-symposium/career-influencer-awards/",
       "dateAdded": "2026-02-11T21:02:45.386Z",
@@ -89,6 +89,13 @@
       "dateAdded": "2026-02-12T11:25:01.000Z",
       "status": "active",
       "isRecurring": true
+    },
+    {
+      "name": "asdsad",
+      "level": "International (external)",
+      "deadline": "",
+      "description": "fdsfdf",
+      "link": "sdffsdf"
     }
   ],
   "lastUpdated": "2026-02-12T11:25:01.000Z",
