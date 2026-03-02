@@ -194,7 +194,15 @@ function renderAwards() {
   noResults.classList.add('hidden');
 
   container.innerHTML = filteredAwards
-    .sort((a, b) => new Date(a.deadlineDate) - new Date(b.deadlineDate))
+    .sort((a, b) => {
+      const today = new Date();
+      const da = new Date(a.deadlineDate);
+      const db = new Date(b.deadlineDate);
+      const aPassed = da < today;
+      const bPassed = db < today;
+      if (aPassed !== bPassed) return aPassed ? 1 : -1;
+      return da - db;
+    })
     .map(award => createAwardCard(award))
     .join('');
 
@@ -227,7 +235,14 @@ function createAwardCard(award) {
     urgencyText = `${daysUntil}d left`;
   }
 
-  const deadlineFormatted = `${award.deadlineMonth} ${award.deadlineDay}`;
+  const deadlineFormatted = new Date(award.deadlineDate + 'T00:00:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+
+  let internalDeadlineFormatted = '';
+  if (award.internalDeadline) {
+    const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+    const [m, d] = award.internalDeadline.split('/');
+    internalDeadlineFormatted = `${monthNames[parseInt(m) - 1]} ${parseInt(d)}`;
+  }
 
   return `
     <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 p-6 flex flex-col">
@@ -239,6 +254,28 @@ function createAwardCard(award) {
       </div>
 
       <div class="space-y-2 mb-4 text-sm flex-1">
+        ${award.internalDeadline ? `
+        <div class="flex items-start">
+          <svg class="w-4 h-4 mr-2 mt-0.5 flex-shrink-0 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+          </svg>
+          <div>
+            <span class="font-medium text-gray-700">Internal Deadline:</span>
+            <span class="text-gray-600">${escapeHtml(internalDeadlineFormatted)}</span>
+          </div>
+        </div>
+        ` : ''}
+
+        <div class="flex items-start">
+          <svg class="w-4 h-4 mr-2 mt-0.5 flex-shrink-0" style="color: #0021A5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+          </svg>
+          <div>
+            <span class="font-medium text-gray-700">Final Deadline:</span>
+            <span class="text-gray-600">${escapeHtml(deadlineFormatted)}</span>
+          </div>
+        </div>
+
         <div class="flex items-start">
           <svg class="w-4 h-4 mr-2 mt-0.5 flex-shrink-0" style="color: #0021A5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
@@ -272,16 +309,6 @@ function createAwardCard(award) {
           </div>
         </div>
         ` : ''}
-
-        <div class="flex items-start">
-          <svg class="w-4 h-4 mr-2 mt-0.5 flex-shrink-0" style="color: #0021A5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-          </svg>
-          <div>
-            <span class="font-medium text-gray-700">Deadline:</span>
-            <span class="text-gray-600">${escapeHtml(deadlineFormatted)}</span>
-          </div>
-        </div>
 
         ${award.applicationMode ? `
         <div class="flex items-start">
