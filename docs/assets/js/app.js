@@ -220,19 +220,22 @@ function createAwardCard(award) {
   const deadline = new Date(award.deadlineDate);
   const daysUntil = Math.ceil((deadline - today) / (1000 * 60 * 60 * 24));
 
-  let urgencyClass, urgencyText;
-  if (daysUntil < 0) {
-    urgencyClass = 'bg-gray-100 text-gray-600';
-    urgencyText = 'Passed';
-  } else if (daysUntil <= 30) {
-    urgencyClass = 'bg-red-100 text-red-800';
-    urgencyText = `${daysUntil}d left`;
-  } else if (daysUntil <= 60) {
-    urgencyClass = 'bg-yellow-100 text-yellow-800';
-    urgencyText = `${daysUntil}d left`;
-  } else {
-    urgencyClass = 'bg-green-100 text-green-800';
-    urgencyText = `${daysUntil}d left`;
+  let urgencyClass = '', urgencyText = '', showChip = false;
+  if (award.deadlineDate && !isNaN(deadline)) {
+    showChip = true;
+    if (daysUntil < 0) {
+      urgencyClass = 'bg-gray-100 text-gray-600';
+      urgencyText = 'Passed';
+    } else if (daysUntil <= 30) {
+      urgencyClass = 'bg-red-100 text-red-800';
+      urgencyText = `${daysUntil}d left`;
+    } else if (daysUntil <= 60) {
+      urgencyClass = 'bg-yellow-100 text-yellow-800';
+      urgencyText = `${daysUntil}d left`;
+    } else {
+      urgencyClass = 'bg-green-100 text-green-800';
+      urgencyText = `${daysUntil}d left`;
+    }
   }
 
   const deadlineFormatted = new Date(award.deadlineDate + 'T00:00:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
@@ -248,9 +251,7 @@ function createAwardCard(award) {
     <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 p-6 flex flex-col">
       <div class="flex justify-between items-start mb-3">
         <h3 class="text-lg font-bold text-gray-900 flex-1 pr-2">${escapeHtml(award.title)}</h3>
-        <span class="px-3 py-1 text-xs font-semibold rounded-full whitespace-nowrap ${urgencyClass}">
-          ${urgencyText}
-        </span>
+        ${showChip ? `<span class="px-3 py-1 text-xs font-semibold rounded-full whitespace-nowrap ${urgencyClass}">${urgencyText}</span>` : ''}
       </div>
 
       <div class="space-y-2 mb-4 text-sm flex-1">
