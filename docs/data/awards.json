@@ -107,6 +107,24 @@
       "dateAdded": "2026-03-02T20:30:19.526Z",
       "status": "active",
       "isRecurring": true
+    },
+    {
+      "id": "1ce9dc1f-2e7e-4c52-9b3d-331f985e0e76",
+      "title": "UF International Educator of the Year Award",
+      "level": "University (internal to UF), College (internal to UF)",
+      "link": "https://aa.ufl.edu/awards/uf-internal-awards/",
+      "deadlineMonth": "",
+      "deadlineDay": "",
+      "deadlineDate": "",
+      "applicationMode": "Internal Review Required (Committee/Departmental Review)",
+      "awardFor": "Faculty",
+      "type": "Cash/Monetary Prize, Plaque/Certificate",
+      "internalDeadline": "",
+      "requirements": "- Cover page with the full name, title, position, and college/unit of the nominee\n- A 1-2 page personal statement by the nominee describing international engagements and contributions to the internationalization of UF.  Do not include a CV, resume, or other extensive materials in the nomination packet.\n- One letter of endorsement or nomination from the nominee?s chair, director, dean, or unit supervisor.\n- Two letters of support, each no more than two pages, from supervisors, colleagues, and/or students.\n- A high-resolution photo of the nominee, preferably one representing their work as an international educator (e.g. in the classroom or the field).",
+      "previousAwardees": "",
+      "dateAdded": "2026-03-03T16:33:41.792Z",
+      "status": "active",
+      "isRecurring": true
     }
   ],
   "lastUpdated": "2026-02-12T11:25:01.000Z",
