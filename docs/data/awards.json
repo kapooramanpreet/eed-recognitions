@@ -140,7 +140,9 @@
       "internalDeadline": "",
       "requirements": "Academic support staff who support online education at the University of Florida, but do not serve in an instructional role or instructional capacity",
       "previousAwardees": "",
-      "dateAdded": "2026-03-05T15:00:57.367Z"
+      "dateAdded": "2026-03-05T15:00:57.367Z",
+      "status": "active",
+      "isRecurring": true
     },
     {
       "id": "69874124-1e9d-4f8c-889b-94bb411022e0",
