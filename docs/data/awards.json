@@ -140,7 +140,23 @@
       "internalDeadline": "",
       "requirements": "Academic support staff who support online education at the University of Florida, but do not serve in an instructional role or instructional capacity",
       "previousAwardees": "",
-      "dateAdded": "2026-03-05T15:00:57.367Z",
+      "dateAdded": "2026-03-05T15:00:57.367Z"
+    },
+    {
+      "id": "69874124-1e9d-4f8c-889b-94bb411022e0",
+      "title": "UF Supplemental Retention Scholarship",
+      "level": "University (internal to UF)",
+      "link": "https://grad.ufl.edu/media/gradufledu/pdf/srs-app.pdf",
+      "deadlineMonth": "November",
+      "deadlineDay": 10,
+      "deadlineDate": "2026-11-10",
+      "applicationMode": "Apply Independently (No Internal Review Required)",
+      "awardFor": "Graduate Students",
+      "type": "Research Grant/Funding",
+      "internalDeadline": "",
+      "requirements": "Must be a graduate student entering their final semester",
+      "previousAwardees": "",
+      "dateAdded": "2026-03-05T14:57:28.498Z",
       "status": "active",
       "isRecurring": true
     }
