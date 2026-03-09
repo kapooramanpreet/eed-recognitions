@@ -161,6 +161,24 @@
       "dateAdded": "2026-03-05T14:57:28.498Z",
       "status": "active",
       "isRecurring": true
+    },
+    {
+      "id": "6d3ff68a-4058-4c3d-8399-6384c20189ac",
+      "title": "NSF Graduate Research Fellowship Program",
+      "level": "National (external)",
+      "link": "https://www.nsf.gov/funding/opportunities/grfp-nsf-graduate-research-fellowship-program/nsf25-547/solicitation",
+      "deadlineMonth": "November",
+      "deadlineDay": 13,
+      "deadlineDate": "2026-11-13",
+      "applicationMode": "Apply Independently (No Internal Review Required)",
+      "awardFor": "Graduate Students",
+      "type": "Research Grant/Funding",
+      "internalDeadline": "",
+      "requirements": "https://www.nsf.gov/funding/opportunities/grfp-nsf-graduate-research-fellowship-program/nsf25-547/solicitation",
+      "previousAwardees": "",
+      "dateAdded": "2026-03-09T15:37:47.778Z",
+      "status": "active",
+      "isRecurring": true
     }
   ],
   "lastUpdated": "2026-02-12T11:25:01.000Z",
