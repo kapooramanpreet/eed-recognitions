@@ -215,6 +215,24 @@
       "dateAdded": "2026-09-03T20:10:41.154Z",
       "status": "active",
       "isRecurring": true
+    },
+    {
+      "id": "ed8cb1a7-4846-46f2-b069-b2327dec2c9b",
+      "title": "dfd",
+      "level": "International (external), National (external)",
+      "link": "dv",
+      "deadlineMonth": "",
+      "deadlineDay": "",
+      "deadlineDate": "",
+      "applicationMode": "Internal Review Required (Committee/Departmental Review)",
+      "awardFor": "Faculty, Staff",
+      "type": "Research Grant/Funding, Cash/Monetary Prize",
+      "internalDeadline": "",
+      "requirements": "fdesf",
+      "previousAwardees": "",
+      "dateAdded": "2026-11-17T13:03:26.408Z",
+      "status": "active",
+      "isRecurring": true
     }
   ],
   "lastUpdated": "2026-02-12T11:25:01.000Z",
