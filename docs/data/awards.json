@@ -215,6 +215,24 @@
       "dateAdded": "2026-09-03T20:10:41.154Z",
       "status": "active",
       "isRecurring": true
+    },
+    {
+      "id": "9b297cde-3fce-4f99-af93-1febaa1f3d20",
+      "title": "Outstanding Peer Mentor or Learning Assistant",
+      "level": "College (internal to UF), Department (internal to UF)",
+      "link": "None",
+      "deadlineMonth": "",
+      "deadlineDay": "",
+      "deadlineDate": "",
+      "applicationMode": "Internal Review Required (Committee/Departmental Review)",
+      "awardFor": "Graduate Students, Undergraduate Students",
+      "type": "Cash/Monetary Prize, Plaque/Certificate",
+      "internalDeadline": "",
+      "requirements": "Open to UF students in good academic standing who served at least one full semester as a peer mentor, or undergraduate TA in an Engineering Education course or program during the award year. Prior winners are ineligible for two years. Nominations come from the course instructor or program coordinator and include a one-page letter, a 300?500 word statement from the nominee on their mentoring approach, and two or three anonymized student comments. Nominees are evaluated on their impact on student learning, active-learning facilitation, inclusive support, initiative, and professionalism",
+      "previousAwardees": "",
+      "dateAdded": "2026-11-17T13:57:35.821Z",
+      "status": "active",
+      "isRecurring": true
     }
   ],
   "lastUpdated": "2026-02-12T11:25:01.000Z",
