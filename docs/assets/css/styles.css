@@ -241,6 +241,20 @@ a:focus {
   transition: background-color 0.15s ease, opacity 0.15s ease;
 }
 
+.key-help-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: #0021A5;
+  border-radius: 9999px;
+  padding: 0.1rem 0.4rem;
+}
+.key-help-btn:hover { background: #E8ECF8; text-decoration: underline; }
+.key-help-body a { color: #0021A5; text-decoration: underline; }
+.key-help-body code { font-size: 0.8em; background: #F3F4F6; padding: 0 0.25rem; border-radius: 0.25rem; }
+
 .packet-primary-btn { background: #0021A5; color: #fff; }
 .packet-primary-btn:hover:not(:disabled) { background: #001580; }
 .packet-secondary-btn { background: #E5E7EB; color: #374151; }

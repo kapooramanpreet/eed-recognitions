@@ -51,6 +51,14 @@ const PROVIDERS = {
     kind: 'openai',
     baseUrl: 'https://api.ai.it.ufl.edu/v1',
     keyHint: 'sk-… (UF NaviGator key)',
+    keySteps: [
+      'Go to <a href="https://api.ai.it.ufl.edu/ui" target="_blank" rel="noopener noreferrer">api.ai.it.ufl.edu/ui</a> and sign in with your GatorLink (UF) account.',
+      'Click <strong>Create New Key</strong>.',
+      'Keep the default team <strong>navigator-toolkit</strong>, give the key a name (e.g. "Awards packet"), and create it.',
+      'Copy the key right away. It is shown only once.',
+      'Paste it into the <strong>API key</strong> box here.'
+    ],
+    keyNote: 'Free for UF students, faculty and staff. Guide: <a href="https://it.ufl.edu/ai/navigator-toolkit/" target="_blank" rel="noopener noreferrer">UFIT NaviGator Toolkit</a>.',
     prefer: [GPT_TERRA, GPT_SOL, LATEST_GPT, /^gpt-4\.1$/i, /^gpt-4o$/i, /claude.*sonnet/i]
   },
   openai: {
@@ -59,6 +67,14 @@ const PROVIDERS = {
     baseUrl: 'https://api.openai.com/v1',
     keyHint: 'sk-… (API key from platform.openai.com)',
     help: 'Needs an OpenAI API key with billing enabled. A ChatGPT Plus subscription alone does not include API access.',
+    keySteps: [
+      'Go to <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener noreferrer">platform.openai.com/api-keys</a> and sign in (your ChatGPT login works).',
+      'If you haven\'t already, add a payment method or credits under <a href="https://platform.openai.com/settings/organization/billing" target="_blank" rel="noopener noreferrer">Settings → Billing</a>.',
+      'Click <strong>Create new secret key</strong>, name it (e.g. "Awards packet") and create it.',
+      'Copy the key (starts with <code>sk-</code>). It is shown only once.',
+      'Paste it into the <strong>API key</strong> box here.'
+    ],
+    keyNote: 'API usage is billed per request, separately from a ChatGPT subscription. A packet typically costs a few cents.',
     prefer: [GPT_TERRA, GPT_SOL, LATEST_GPT, /^gpt-4\.1$/i, /^gpt-4o$/i],
     filter: id => /^(gpt|o\d|chatgpt)/i.test(id) && !/realtime|audio|transcribe|tts|image|search|instruct/i.test(id)
   },
@@ -67,6 +83,14 @@ const PROVIDERS = {
     kind: 'anthropic',
     keyHint: 'sk-ant-… (API key from console.anthropic.com)',
     help: 'Needs an Anthropic API key. A Claude.ai Pro subscription alone does not include API access.',
+    keySteps: [
+      'Go to <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener noreferrer">console.anthropic.com</a> and sign in or create an account.',
+      'If you haven\'t already, add credits under <a href="https://console.anthropic.com/settings/billing" target="_blank" rel="noopener noreferrer">Settings → Billing</a>.',
+      'Open <strong>Settings → API Keys</strong> and click <strong>Create Key</strong>. Name it (e.g. "Awards packet").',
+      'Copy the key (starts with <code>sk-ant-</code>). It is shown only once.',
+      'Paste it into the <strong>API key</strong> box here.'
+    ],
+    keyNote: 'API usage is billed per request, separately from a Claude.ai subscription. A packet typically costs a few cents.',
     prefer: [/^claude-opus-5-5$/, /^claude-opus-\d/, /^claude-sonnet-\d/]
   }
 };
@@ -832,10 +856,18 @@ export function openPacketModal(award) {
                   ${Object.entries(PROVIDERS).map(([id, p]) => `<option value="${id}">${esc(p.label)}</option>`).join('')}
                 </select>
               </label>
-              <label class="block text-xs font-medium text-gray-700">API key
-                <input data-el="api-key" type="password" autocomplete="off" spellcheck="false"
+              <div>
+                <div class="flex items-center justify-between gap-2">
+                  <label for="packet-api-key" class="text-xs font-medium text-gray-700">API key</label>
+                  <button type="button" data-action="key-help" class="key-help-btn"
+                    title="How to get an API key: click for step-by-step instructions">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    How do I get a key?
+                  </button>
+                </div>
+                <input id="packet-api-key" data-el="api-key" type="password" autocomplete="off" spellcheck="false"
                   class="mt-1 w-full px-3 py-1.5 text-sm border border-gray-300 rounded-md">
-              </label>
+              </div>
               <p data-el="provider-help" class="hidden text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-md px-2 py-1.5"></p>
               <label class="block text-xs font-medium text-gray-700">Model
                 <select data-el="model-select" class="mt-1 w-full px-3 py-1.5 text-sm border border-gray-300 rounded-md bg-white"></select>
@@ -851,7 +883,7 @@ export function openPacketModal(award) {
           </section>
 
           <section>
-            <h3 class="packet-step"><span>3</span> Your documents</h3>
+            <h3 class="packet-step"><span>3</span> <em data-el="docs-heading" class="not-italic">Your documents</em></h3>
             <label data-el="dropzone" class="packet-dropzone flex flex-col items-center justify-center gap-1 border-2 border-dashed border-gray-300 rounded-lg p-4 text-center cursor-pointer hover:border-blue-400 hover:bg-blue-50/40 transition-colors">
               <svg class="w-7 h-7 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
               <span class="text-sm text-gray-700"><span class="font-semibold text-uf-blue">Upload CV</span> and any supporting docs</span>
@@ -873,6 +905,15 @@ export function openPacketModal(award) {
                 </label>
                 <label class="block text-xs font-medium text-gray-700"><span data-el="name-label">Your name</span> (optional)
                   <input data-el="name" class="mt-1 w-full px-3 py-1.5 text-sm border border-gray-300 rounded-md">
+                </label>
+              </div>
+              <div data-el="consent-box" class="hidden text-xs text-amber-900 bg-amber-50 border border-amber-300 rounded-md p-3 space-y-2" role="note">
+                <p><strong>Get the nominee's approval first.</strong> Their CV and documents will be sent to the AI provider you chose in step 2
+                  (<span data-el="consent-provider"></span>) to write this draft. Ask the nominee before using their materials with an AI tool,
+                  and share the draft with them to review before it is submitted.</p>
+                <label class="flex items-start gap-2 font-medium cursor-pointer">
+                  <input type="checkbox" data-el="consent" class="mt-0.5 rounded border-amber-400">
+                  <span>I have the nominee's permission to use their documents with this AI tool.</span>
                 </label>
               </div>
               <fieldset class="space-y-1.5">
@@ -1026,6 +1067,7 @@ export function openPacketModal(award) {
     providerSelect.value = pid();
     keyInput.value = session.keys[pid()] || '';
     keyInput.placeholder = p.keyHint;
+    $('consent-provider').textContent = p.label;
     $('provider-help').textContent = p.help || '';
     $('provider-help').classList.toggle('hidden', !p.help);
     // The endpoint only applies to OpenAI-compatible providers
@@ -1070,9 +1112,50 @@ export function openPacketModal(award) {
   applyProvider();
   setTimeout(() => (session.keys[pid()] ? modelSelect : keyInput).focus(), 50);
 
+  // ---- API key help (small dialog on top of the drafter) ----
+  function openKeyHelp() {
+    const p = prov();
+    const help = document.createElement('div');
+    help.className = 'fixed inset-0 z-[60] flex items-center justify-center bg-black/40 p-4';
+    help.setAttribute('role', 'dialog');
+    help.setAttribute('aria-modal', 'true');
+    help.setAttribute('aria-labelledby', 'key-help-title');
+    help.innerHTML = `
+      <div class="bg-white w-full max-w-md rounded-xl shadow-2xl fade-in">
+        <div class="flex items-center justify-between px-5 py-3 border-b">
+          <h3 id="key-help-title" class="text-base font-bold text-gray-900">How to get an API key: ${esc(p.label)}</h3>
+          <button type="button" data-help="close" class="rounded-md p-1 text-gray-500 hover:bg-gray-100" aria-label="Close">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+        <div class="key-help-body px-5 py-4 text-sm text-gray-700 space-y-3">
+          <ol class="list-decimal pl-5 space-y-1.5">${(p.keySteps || []).map(s => `<li>${s}</li>`).join('')}</ol>
+          ${p.keyNote ? `<p class="text-xs text-gray-600 bg-gray-50 border rounded-md p-2">${p.keyNote}</p>` : ''}
+          <p class="text-xs text-gray-500">🔒 Your key stays in this browser tab's memory only. It's never saved or sent anywhere except ${esc(p.label)}. Treat it like a password.</p>
+        </div>
+        <div class="px-5 py-3 border-t flex justify-end">
+          <button type="button" data-help="close" class="packet-primary-btn">Got it</button>
+        </div>
+      </div>`;
+    const closeHelp = () => { help.remove(); $action('key-help').focus(); };
+    help.addEventListener('click', e => {
+      if (e.target === help || e.target.closest('[data-help="close"]')) closeHelp();
+    });
+    // Escape closes only this dialog, not the drafter behind it
+    help.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { e.stopPropagation(); closeHelp(); }
+    });
+    modal.appendChild(help);
+    help.querySelector('[data-help="close"]').focus();
+  }
+  $action('key-help').addEventListener('click', openKeyHelp);
+
   // ---- role ----
   $('role').addEventListener('change', e => {
-    $('name-label').textContent = e.target.value === 'nominator' ? "Nominee's name" : 'Your name';
+    const nominating = e.target.value === 'nominator';
+    $('name-label').textContent = nominating ? "Nominee's name" : 'Your name';
+    $('docs-heading').textContent = nominating ? "Nominee's documents" : 'Your documents';
+    $('consent-box').classList.toggle('hidden', !nominating);
   });
 
   // ---- award page scrape ----
@@ -1188,6 +1271,11 @@ export function openPacketModal(award) {
     if (state.files.some(f => f.status === 'reading')) { showError('Still reading your documents — try again in a moment.'); return; }
     const sections = [...modal.querySelectorAll('input[name="packet-section"]:checked')].map(i => i.value);
     if (!sections.length) { showError('Select at least one packet component (step 4).'); return; }
+    if ($('role').value === 'nominator' && !$('consent').checked) {
+      showError("Confirm you have the nominee's permission to use their documents with AI (step 4).");
+      $('consent').focus();
+      return;
+    }
     if (state.hasDraft && !confirm('Regenerate? Your edits to the current draft will be replaced.')) return;
 
     // Fit all documents into the overall budget
