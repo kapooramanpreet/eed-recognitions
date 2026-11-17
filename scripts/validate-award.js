@@ -2,13 +2,14 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import { suggestKpi } from './kpi.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const REQUIRED_FIELDS = ['id', 'title', 'deadlineMonth', 'deadlineDay', 'deadlineDate', 'link'];
 const OPTIONAL_FIELDS = ['level', 'applicationMode', 'awardFor', 'type', 'internalDeadline',
-                         'requirements', 'previousAwardees', 'dateAdded', 'status', 'isRecurring'];
+                         'requirements', 'previousAwardees', 'dateAdded', 'status', 'isRecurring', 'kpi'];
 
 console.log('🔍 Validating awards.json...\n');
 
@@ -93,6 +94,15 @@ try {
     // Validate deadline day (1-31)
     if (award.deadlineDay && (award.deadlineDay < 1 || award.deadlineDay > 31)) {
       errors.push(`Award #${awardNum} (${award.title}): Invalid deadline day (must be 1-31)`);
+    }
+
+    // KPI flag: must be true/false; warn when it disagrees with the rule so reviewers double-check
+    if (!('kpi' in award)) {
+      warnings.push(`Award #${awardNum} (${award.title}): Missing "kpi" flag (true/false)`);
+    } else if (typeof award.kpi !== 'boolean') {
+      errors.push(`Award #${awardNum} (${award.title}): "kpi" must be true or false`);
+    } else if (award.kpi !== suggestKpi(award)) {
+      warnings.push(`Award #${awardNum} (${award.title}): kpi is ${award.kpi}, but the KPI rule (national/international, external to UF, for faculty) suggests ${!award.kpi}. Confirm this is intended.`);
     }
 
     // Check for duplicate IDs

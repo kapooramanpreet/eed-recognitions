@@ -150,3 +150,195 @@ a:focus {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ------------------------------------------------------------------ */
+/* AI Packet Drafter                                                   */
+/* ------------------------------------------------------------------ */
+
+/* Card action buttons: equal size, icon above label */
+.card-action-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  min-height: 3.5rem;
+  padding: 0.5rem 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.1;
+  text-align: center;
+  border-radius: 0.375rem;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.ai-btn-primary {
+  background: linear-gradient(135deg, #0021A5 0%, #6D28D9 55%, #FA4616 100%);
+  background-size: 160% 160%;
+  background-position: 0% 50%;
+  transition: background-position 0.4s ease, box-shadow 0.2s ease, transform 0.1s ease;
+}
+
+.ai-btn-primary:hover {
+  background-position: 100% 50%;
+  box-shadow: 0 4px 14px rgba(109, 40, 217, 0.35);
+}
+
+.ai-btn-primary:active {
+  transform: scale(0.97);
+}
+
+.ai-btn-primary.is-busy {
+  background: #4B5563;
+}
+
+.ai-gradient {
+  background: linear-gradient(135deg, #0021A5 0%, #001580 60%, #3B1D8F 100%);
+}
+
+.packet-step {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1F2937;
+  margin-bottom: 0.5rem;
+}
+
+.packet-step > span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 9999px;
+  background: #0021A5;
+  color: #fff;
+  font-size: 0.7rem;
+}
+
+.packet-spinner {
+  display: inline-block;
+  width: 0.85rem;
+  height: 0.85rem;
+  border: 2px solid #CBD5E1;
+  border-top-color: #0021A5;
+  border-radius: 9999px;
+  animation: spin 0.8s linear infinite;
+  vertical-align: -2px;
+}
+
+.packet-primary-btn,
+.packet-secondary-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  border-radius: 0.375rem;
+  transition: background-color 0.15s ease, opacity 0.15s ease;
+}
+
+.packet-primary-btn { background: #0021A5; color: #fff; }
+.packet-primary-btn:hover:not(:disabled) { background: #001580; }
+.packet-secondary-btn { background: #E5E7EB; color: #374151; }
+.packet-secondary-btn:hover:not(:disabled) { background: #D1D5DB; }
+.packet-primary-btn:disabled,
+.packet-secondary-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* Preview document typography */
+.packet-preview { font-family: Calibri, 'Segoe UI', system-ui, sans-serif; color: #1F2937; line-height: 1.6; font-size: 0.95rem; }
+.packet-preview[contenteditable="true"] { outline: none; cursor: text; }
+.packet-preview[contenteditable="true"]:focus { box-shadow: inset 0 0 0 2px rgba(0, 33, 165, 0.25); }
+.packet-preview h1 { font-size: 1.5rem; font-weight: 700; color: #0021A5; margin: 0 0 0.75rem; }
+.packet-preview h2 { font-size: 1.2rem; font-weight: 700; color: #0021A5; margin: 1.25rem 0 0.5rem; }
+.packet-preview h3 { font-size: 1.05rem; font-weight: 600; color: #333; margin: 1rem 0 0.4rem; }
+.packet-preview p { margin: 0 0 0.75rem; }
+.packet-preview ul { list-style: disc; padding-left: 1.5rem; margin: 0 0 0.75rem; }
+.packet-preview ol { list-style: decimal; padding-left: 1.5rem; margin: 0 0 0.75rem; }
+.packet-preview li { margin-bottom: 0.25rem; }
+.packet-preview table { width: 100%; border-collapse: collapse; margin: 0 0 1rem; font-size: 0.875rem; }
+.packet-preview th, .packet-preview td { border: 1px solid #CBD5E1; padding: 0.4rem 0.6rem; vertical-align: top; text-align: left; }
+.packet-preview th { background: #E8ECF8; font-weight: 600; }
+.packet-preview mark { background: #FEF08A; padding: 0 2px; border-radius: 2px; }
+.packet-preview hr { border: 0; border-top: 2px dashed #CBD5E1; margin: 1.75rem 0; position: relative; }
+.packet-preview hr::after {
+  content: 'page break';
+  position: absolute; left: 50%; top: -0.6rem; transform: translateX(-50%);
+  background: #fff; padding: 0 0.5rem; font-size: 0.65rem; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.05em;
+}
+
+.packet-caret {
+  display: inline-block;
+  width: 0.5rem;
+  height: 1rem;
+  background: #6D28D9;
+  vertical-align: -2px;
+  animation: packetBlink 1s steps(2, start) infinite;
+}
+
+@keyframes packetBlink { to { visibility: hidden; } }
+
+/* Sparkly gradient for the "Generate Packet" icon: colors cycle gently */
+.sparkle-stop-1 { animation: sparkleStop1 3s ease-in-out infinite; }
+.sparkle-stop-2 { animation: sparkleStop2 3s ease-in-out infinite; }
+.sparkle-stop-3 { animation: sparkleStop3 3s ease-in-out infinite; }
+
+/* Violet -> purple -> indigo/blue, the usual "AI" palette */
+@keyframes sparkleStop1 { 0%, 100% { stop-color: #A855F7; } 50% { stop-color: #6366F1; } }
+@keyframes sparkleStop2 { 0%, 100% { stop-color: #7C3AED; } 50% { stop-color: #A855F7; } }
+@keyframes sparkleStop3 { 0%, 100% { stop-color: #6366F1; } 50% { stop-color: #3B82F6; } }
+
+.sparkle-icon {
+  margin: -2px 0; /* larger than neighbouring 16px icons without shifting the label */
+  transition: transform 0.2s ease;
+}
+
+/* Magnify the icon on hover for all card action buttons */
+.card-action-btn svg {
+  transition: transform 0.2s ease;
+}
+
+.card-action-btn:hover svg {
+  transform: scale(1.15);
+}
+
+.ai-packet-btn:hover .sparkle-icon {
+  transform: scale(1.15) rotate(-8deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sparkle-stop-1, .sparkle-stop-2, .sparkle-stop-3 { animation: none; }
+  .card-action-btn:hover svg,
+  .ai-packet-btn:hover .sparkle-icon { transform: none; }
+}
+
+/* KPI awards: prestigious national/international faculty awards that count
+   toward department rankings */
+.kpi-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  /* Same size as the deadline chip (px-3 py-1 text-xs font-semibold) */
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 600;
+  white-space: nowrap;
+  color: #78350F;
+  background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+  /* Inset ring instead of a border so the chip isn't taller than its neighbour */
+  box-shadow: inset 0 0 0 1px #F59E0B;
+  border-radius: 9999px;
+  cursor: help;
+}
+
+.kpi-chip svg {
+  color: #D97706;
+}
+
+.kpi-card {
+  border-top: 4px solid #F59E0B;
+}

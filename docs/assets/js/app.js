@@ -1,3 +1,5 @@
+import { openPacketModal } from './packet-generator.js';
+
 // State management
 let allAwards = [];
 let filteredAwards = [];
@@ -209,6 +211,14 @@ function renderAwards() {
   // Attach calendar download listeners
   attachCalendarListeners();
 
+  // Attach AI packet drafter listeners
+  container.querySelectorAll('.ai-packet-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const award = allAwards.find(a => a.id === btn.dataset.awardId);
+      if (award) openPacketModal(award);
+    });
+  });
+
   // Attach requirements expand listeners
   attachRequirementsListeners();
 }
@@ -248,10 +258,21 @@ function createAwardCard(award) {
   }
 
   return `
-    <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 p-6 flex flex-col">
+    <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 p-6 flex flex-col ${award.kpi ? 'kpi-card' : ''}">
       <div class="flex justify-between items-start mb-3">
         <h3 class="text-lg font-bold text-gray-900 flex-1 pr-2">${escapeHtml(award.title)}</h3>
-        ${showChip ? `<span class="px-3 py-1 text-xs font-semibold rounded-full whitespace-nowrap ${urgencyClass}">${urgencyText}</span>` : ''}
+        <div class="flex items-center gap-1.5 shrink-0">
+          ${showChip ? `<span class="px-3 py-1 text-xs font-semibold rounded-full whitespace-nowrap ${urgencyClass}">${urgencyText}</span>` : ''}
+          ${award.kpi ? `
+          <span class="kpi-chip" tabindex="0"
+            title="KPI award: a prestigious national/international faculty award that counts toward the university's rankings"
+            aria-label="KPI award: a prestigious national/international faculty award that counts toward the university's rankings">
+            <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path d="M9.05 2.93c.3-.92 1.6-.92 1.9 0l1.07 3.29a1 1 0 00.95.69h3.46c.97 0 1.37 1.24.59 1.81l-2.8 2.03a1 1 0 00-.36 1.12l1.07 3.29c.3.92-.76 1.69-1.54 1.12l-2.8-2.03a1 1 0 00-1.18 0l-2.8 2.03c-.78.57-1.84-.2-1.54-1.12l1.07-3.29a1 1 0 00-.36-1.12L2.98 8.72c-.78-.57-.38-1.81.59-1.81h3.46a1 1 0 00.95-.69l1.07-3.29z"/>
+            </svg>
+            KPI
+          </span>` : ''}
+        </div>
       </div>
 
       <div class="space-y-2 mb-4 text-sm flex-1">
@@ -342,26 +363,43 @@ function createAwardCard(award) {
         </div>
       ` : ''}
 
-      <div class="flex gap-2 mt-auto pt-4 border-t">
+      <div class="grid grid-cols-3 gap-2 mt-auto pt-4 border-t">
         <a
           href="${escapeHtml(award.link)}"
           target="_blank"
           rel="noopener noreferrer"
-          class="flex-1 px-4 py-2 text-white text-sm font-medium rounded-md transition-colors text-center"
+          class="card-action-btn text-white"
           style="background-color: #0021A5;"
           onmouseover="this.style.backgroundColor='#001580'"
           onmouseout="this.style.backgroundColor='#0021A5'"
+          title="Open the official award page"
         >
-          Award Page
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+          </svg>
+          <span>Award Page</span>
         </a>
         <button
+          type="button"
           data-award-id="${escapeHtml(award.id)}"
-          class="calendar-btn px-4 py-2 bg-gray-100 text-gray-700 text-sm font-medium rounded-md hover:bg-gray-200 transition-colors flex items-center justify-center"
+          class="ai-packet-btn card-action-btn bg-gray-100 text-gray-700 hover:bg-gray-200"
+          title="Draft an application packet with AI"
+        >
+          <svg class="sparkle-icon w-5 h-5" viewBox="0 0 24 24" fill="url(#sparkle-gradient)" aria-hidden="true">
+            <path d="M9.5 2.5l1.6 4.4 4.4 1.6-4.4 1.6-1.6 4.4-1.6-4.4L3.5 8.5l4.4-1.6 1.6-4.4zM17.5 12l1 2.6 2.5 1-2.5 1-1 2.6-1-2.6-2.5-1 2.5-1 1-2.6zM6 16l.8 1.9 1.9.8-1.9.8L6 21.4l-.8-1.9-1.9-.8 1.9-.8L6 16z"/>
+          </svg>
+          <span>Generate Packet</span>
+        </button>
+        <button
+          type="button"
+          data-award-id="${escapeHtml(award.id)}"
+          class="calendar-btn card-action-btn bg-gray-100 text-gray-700 hover:bg-gray-200"
           title="Add deadline to calendar"
         >
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
           </svg>
+          <span>Add to Calendar</span>
         </button>
       </div>
     </div>
@@ -414,7 +452,7 @@ function attachCalendarListeners() {
 
         // Visual feedback
         const originalHtml = button.innerHTML;
-        button.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>';
+        button.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>Added!</span>';
         button.classList.add('bg-green-100', 'text-green-700');
 
         setTimeout(() => {

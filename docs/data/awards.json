@@ -16,7 +16,8 @@
       "link": "https://aa.ufl.edu/awards/uf-internal-awards/teacher--adviser-of-the-year/",
       "dateAdded": "2026-02-11T21:02:45.386Z",
       "status": "active",
-      "isRecurring": true
+      "isRecurring": true,
+      "kpi": false
     },
     {
       "id": "fd25e26e-7231-43a5-9329-bf88fdcbd1a0",
@@ -34,7 +35,8 @@
       "link": "https://grad.ufl.edu/work/awards/fdma/",
       "dateAdded": "2026-02-11T21:02:45.386Z",
       "status": "active",
-      "isRecurring": true
+      "isRecurring": true,
+      "kpi": false
     },
     {
       "id": "c78df1c4-b15c-4d3f-8b7d-e1c60cee03c6",
@@ -52,7 +54,8 @@
       "link": "https://career.ufl.edu/faculty/faculty-staff-career-symposium/career-influencer-awards/",
       "dateAdded": "2026-02-11T21:02:45.386Z",
       "status": "active",
-      "isRecurring": true
+      "isRecurring": true,
+      "kpi": false
     },
     {
       "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
@@ -70,7 +73,8 @@
       "link": "https://aa.ufl.edu/awards/uf-internal-awards/teacher--adviser-of-the-year/",
       "dateAdded": "2026-02-12T11:20:22.000Z",
       "status": "active",
-      "isRecurring": true
+      "isRecurring": true,
+      "kpi": false
     },
     {
       "id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
@@ -88,7 +92,8 @@
       "link": "https://2025.fie-conference.org/awards/2025-new-faculty-fellows-award",
       "dateAdded": "2026-02-12T11:25:01.000Z",
       "status": "active",
-      "isRecurring": true
+      "isRecurring": true,
+      "kpi": true
     },
     {
       "id": "b8a91cf8-949d-4df5-a76a-bc3a24e3f84e",
@@ -106,7 +111,8 @@
       "previousAwardees": "",
       "dateAdded": "2026-03-02T20:30:19.526Z",
       "status": "active",
-      "isRecurring": true
+      "isRecurring": true,
+      "kpi": false
     },
     {
       "id": "14957e04-8f1f-4501-9132-067303719513",
@@ -124,7 +130,8 @@
       "previousAwardees": "Jeremiah Blanchard (HWCOE), Gloria Kim (HWCOE and Campus)",
       "dateAdded": "2026-03-03T16:42:02.281Z",
       "status": "active",
-      "isRecurring": true
+      "isRecurring": true,
+      "kpi": false
     },
     {
       "id": "d91722d0-2a82-45b0-9a8d-b74ebdea7a78",
@@ -142,7 +149,8 @@
       "previousAwardees": "",
       "dateAdded": "2026-03-05T15:00:57.367Z",
       "status": "active",
-      "isRecurring": true
+      "isRecurring": true,
+      "kpi": false
     },
     {
       "id": "69874124-1e9d-4f8c-889b-94bb411022e0",
@@ -160,7 +168,8 @@
       "previousAwardees": "",
       "dateAdded": "2026-03-05T14:57:28.498Z",
       "status": "active",
-      "isRecurring": true
+      "isRecurring": true,
+      "kpi": false
     },
     {
       "id": "6d3ff68a-4058-4c3d-8399-6384c20189ac",
@@ -178,7 +187,8 @@
       "previousAwardees": "",
       "dateAdded": "2026-03-09T15:37:47.778Z",
       "status": "active",
-      "isRecurring": true
+      "isRecurring": true,
+      "kpi": false
     },
     {
       "id": "4a790e8d-e5d3-49e8-b9ea-5624b1662c64",
@@ -196,7 +206,8 @@
       "previousAwardees": "Andrea Ramirez-Salgado, Diego Alvarado, Catia Silva",
       "dateAdded": "2026-08-04T19:05:37.302Z",
       "status": "active",
-      "isRecurring": true
+      "isRecurring": true,
+      "kpi": false
     },
     {
       "id": "c7030bc7-055c-4f68-ae2d-2f142e5d33d1",
@@ -214,7 +225,8 @@
       "previousAwardees": "Mike Seufert, Amanpreet Kapoor",
       "dateAdded": "2026-09-03T20:10:41.154Z",
       "status": "active",
-      "isRecurring": true
+      "isRecurring": true,
+      "kpi": false
     }
   ],
   "lastUpdated": "2026-02-12T11:25:01.000Z",

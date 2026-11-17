@@ -5,6 +5,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import { suggestKpi } from './kpi.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -158,7 +159,8 @@ async function processSubmission(row, rowNumber, sheets) {
     link: link,
     dateAdded: new Date().toISOString(),
     status: 'active',
-    isRecurring: true
+    isRecurring: true,
+    kpi: suggestKpi({ level: levelCleaned, awardFor })
   };
 
   // Validate award
@@ -270,6 +272,7 @@ ${award.internalDeadline ? `**Internal Deadline:** ${award.internalDeadline}` : 
 - **Award For:** ${award.awardFor}
 - **Type:** ${award.type}
 - **Link:** [View Award](${award.link})
+- **KPI award (suggested):** ${award.kpi ? 'Yes' : 'No'}. National/international, external to UF, and for faculty. Change \`kpi\` in the JSON if this is wrong.
 
 ### Requirements
 ${award.requirements || 'N/A'}
@@ -285,6 +288,7 @@ ${award.previousAwardees || 'N/A'}
 - [ ] Deadlines are correct
 - [ ] Link is valid and accessible
 - [ ] Requirements are complete
+- [ ] KPI flag is correct (counts toward department rankings)
 
 ### Actions
 - **Approve & Merge:** Award will appear on website within 2 minutes

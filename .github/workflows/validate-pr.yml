@@ -5,7 +5,10 @@ on:
     branches:
       - main
     paths:
-      - 'data/awards.json'
+      - 'docs/data/awards.json'
+      - 'scripts/validate-award.js'
+      - 'scripts/kpi.js'
+      - '.github/workflows/validate-pr.yml'
 
 permissions:
   contents: read
@@ -24,11 +27,7 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install dependencies
-        run: |
-          cd scripts
-          npm ci
-
+      # validate-award.js uses only Node built-ins, so no npm install is needed
       - name: Validate JSON structure
         id: validate
         run: |
@@ -59,6 +58,14 @@ jobs:
                 comment += '**Errors:**\n';
                 results.errors.forEach(error => {
                   comment += `- ${error}\n`;
+                });
+              }
+
+              // Warnings (e.g. a KPI flag that differs from the KPI rule) need a reviewer's eye
+              if (results.warnings && results.warnings.length) {
+                comment += '\n⚠️ **Warnings (please review):**\n';
+                results.warnings.forEach(warning => {
+                  comment += `- ${warning}\n`;
                 });
               }
             } else {

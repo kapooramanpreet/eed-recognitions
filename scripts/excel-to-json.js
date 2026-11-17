@@ -1,5 +1,6 @@
 import XLSX from 'xlsx';
 import fs from 'fs';
+import { suggestKpi } from './kpi.js';
 import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import { fileURLToPath } from 'url';
@@ -109,7 +110,8 @@ const awards = rawData.map((row, index) => {
       link: (row['Link to Award'] || '').toString().trim(),
       dateAdded: new Date().toISOString(),
       status: 'active',
-      isRecurring: true
+      isRecurring: true,
+      kpi: suggestKpi({ level: (row['Level'] || '').toString(), awardFor: (row['Award for'] || '').toString() })
     };
 
     console.log(`✓ Processed: ${award.title}`);

@@ -1,4 +1,5 @@
 import fs from 'fs';
+import { suggestKpi } from './kpi.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -90,7 +91,8 @@ try {
       link: link.trim(),
       dateAdded: new Date().toISOString(),
       status: 'active',
-      isRecurring: true
+      isRecurring: true,
+      kpi: suggestKpi({ level: levelCleaned, awardFor })
     };
 
     awards.push(award);
