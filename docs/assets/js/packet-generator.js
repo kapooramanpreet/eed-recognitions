@@ -478,7 +478,8 @@ Output format (strict): Markdown only, no code fences, no preamble or closing co
 - Use paragraphs, "- " bullet lists, and **bold** sparingly.
 - Tables are allowed as standard Markdown pipe tables (header row, then |---| separator, one row per line). Inside a cell use "<br>" for line breaks; no HTML anywhere else.
 - Use plain ASCII hyphens (-) and regular spaces; no special Unicode hyphens or HTML entities.
-- Put a line containing only "---" between packet components (it becomes a page break).`;
+- Put a line containing only "---" between packet components (it becomes a page break).
+- Do not write an AI-use disclosure or mention AI anywhere; a standard AI Use Disclosure is appended to the packet automatically.`;
 
   const fileBlock = files.length
     ? files.map(f => `=== DOCUMENT: ${f.name} ===\n${f.text}`).join('\n\n')
@@ -512,6 +513,38 @@ ${instructions ? `## Additional instructions from the user\n(Any facts stated he
 ${fileBlock}`;
 
   return { system, user };
+}
+
+// Always appended to a generated packet (not left to the model) so every
+// draft states how AI was used. Markdown, so it flows into the preview and
+// the .docx like any other section. The final attestation is ==highlighted==
+// so it counts as a review item until the author confirms it is true.
+function buildAiDisclosure({ providerLabel, model, role, nomineeName, sections, fileCount, hasAwardPage, hasInstructions }) {
+  const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  const author = role === 'nominator' ? 'nominator' : 'applicant';
+  const inputs = [
+    "the award's listing in the EEd Recognitions Navigator" + (hasAwardPage ? ' and its public award page' : ''),
+    fileCount
+      ? `${fileCount} document${fileCount === 1 ? '' : 's'} supplied by the ${author}` +
+        ' (such as a CV)' + (role === 'nominator' ? `, shared with permission from ${nomineeName || 'the nominee'}` : '')
+      : '',
+    hasInstructions ? `written instructions from the ${author}` : ''
+  ].filter(Boolean);
+  const list = inputs.length > 1 ? `${inputs.slice(0, -1).join(', ')} and ${inputs.at(-1)}` : inputs[0];
+  return `
+
+---
+
+## AI Use Disclosure
+
+Generative AI was used to prepare a first draft of this packet on ${date}, using the AI Packet Drafter in the EEd Recognitions Navigator with ${providerLabel} (model: ${model}).
+
+- **What the AI was given:** ${list}.
+- **What the AI produced:** an initial draft of the following components: ${sections.join('; ')}.
+- **What the AI did not do:** it did not submit anything, contact anyone, or have access to information beyond the materials listed above.
+
+==The ${author} reviewed, edited and verified all content in this packet, and takes full responsibility for its accuracy.==
+`;
 }
 
 // ---------------------------------------------------------------------------
@@ -1328,6 +1361,16 @@ export function openPacketModal(award) {
       clearInterval(waitTimer);
       cancelAnimationFrame(raf);
       if (md.trim()) {
+        md = md.replace(/\n-{3,}\s*$/, '') + buildAiDisclosure({
+          providerLabel: PROVIDERS[cfg.provider].label,
+          model: cfg.model,
+          role: $('role').value,
+          nomineeName: $('name').value.trim(),
+          sections: PACKET_SECTIONS.filter(s => sections.includes(s.id)).map(s => s.label),
+          fileCount: files.length,
+          hasAwardPage: !!state.awardPageText.trim(),
+          hasInstructions: !!$('instructions').value.trim()
+        });
         preview.innerHTML = markdownToHtml(md);
         state.hasDraft = true;
       } else if (!errorEl.textContent) {
